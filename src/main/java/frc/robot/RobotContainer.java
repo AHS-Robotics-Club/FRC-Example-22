@@ -11,11 +11,13 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.HangyThingySubsystem;
 import frc.robot.subsystems.IntakeSolenoidSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -31,6 +33,7 @@ public class RobotContainer {
   
   private final DriveSubsystem driveSubsystem = new DriveSubsystem(); // Adding a subsystem
   private final IntakeSolenoidSubsystem intakeSolenoidSubsystem = new IntakeSolenoidSubsystem();
+  private final HangyThingySubsystem hangyThingySubsystem = new HangyThingySubsystem();
 
   private XboxController controller = new XboxController(OIConstants.controller); // Adding robot controller
 
@@ -59,8 +62,11 @@ public class RobotContainer {
         new InstantCommand(intakeSolenoidSubsystem::dropLeftIntake),
         new InstantCommand(intakeSolenoidSubsystem::dropRightIntake)
       ));
-
+    
+    new JoystickButton(controller, Button.kY.value)
+      .toggleWhenPressed(new StartEndCommand(hangyThingySubsystem::forward, hangyThingySubsystem::deactivate, hangyThingySubsystem));
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
