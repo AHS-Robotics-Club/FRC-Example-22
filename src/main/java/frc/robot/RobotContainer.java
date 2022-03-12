@@ -8,14 +8,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.AutoCommand;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.HangyThingySubsystem;
-import frc.robot.subsystems.IntakeSolenoidSubsystem;
+import frc.robot.subsystems.ITSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -28,13 +27,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-  private final ExampleCommand m_autoCommand = new ExampleCommand(exampleSubsystem);
-  
   private final DriveSubsystem driveSubsystem = new DriveSubsystem(); // Adding a subsystem
-  private final IntakeSolenoidSubsystem intakeSolenoidSubsystem = new IntakeSolenoidSubsystem();
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final HangyThingySubsystem hangyThingySubsystem = new HangyThingySubsystem();
-
+  private final ITSubsystem it = new ITSubsystem();
+  private final AutoCommand m_autoCommand = new AutoCommand(intakeSubsystem);
   private XboxController controller = new XboxController(OIConstants.controller); // Adding robot controller
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -56,15 +53,14 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    // Drops intake on press of the A button
-    new JoystickButton(controller, Button.kA.value)
-      .whenPressed(new ParallelCommandGroup(
-        new InstantCommand(intakeSolenoidSubsystem::dropLeftIntake),
-        new InstantCommand(intakeSolenoidSubsystem::dropRightIntake)
-      ));
+    // Drops intake and runs intake it on press of the A button
+    new JoystickButton(controller, Button.kLeftBumper.value)
+      .whenPressed(new InstantCommand(intakeSubsystem::run,intakeSubsystem));
     
     new JoystickButton(controller, Button.kY.value)
       .toggleWhenPressed(new StartEndCommand(hangyThingySubsystem::forward, hangyThingySubsystem::deactivate, hangyThingySubsystem));
+
+    new JoystickButton(controller, Button.kRightBumper.value).whenPressed(new InstantCommand(it::run,it));
   }
 
 

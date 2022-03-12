@@ -13,9 +13,6 @@ public class ITSubsystem extends SubsystemBase{
 		motor1.set(0.5);
 		motor2.set(0.5);
 	}
-	public void stop(){
-		motor1.set(0.0);
-		motor2.set(0.0);
-	}
+
 }
 
