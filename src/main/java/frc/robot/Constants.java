@@ -35,7 +35,13 @@ public final class Constants {
         public static final int actuatorForwardPort = 3;
         public static final int actuatorReversePort = 4;
     }
-
+	public static final class IntakeConst{
+		public static final int IntakeMotor = 9;
+	}
+	public static final class ITConst{
+		public static final int motor1 = 10;
+		public static final int motor2 = 11;
+	}
     // Controller constants
     public static final class OIConstants {
         public static final int controller = 0;
