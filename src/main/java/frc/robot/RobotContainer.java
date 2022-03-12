@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.XboxController.Axis;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AutoCommand;
 import frc.robot.subsystems.DriveSubsystem;
@@ -53,14 +54,19 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    // Drops intake and runs intake it on press of the A button
-    new JoystickButton(controller, Button.kLeftBumper.value)
-      .whenPressed(new InstantCommand(intakeSubsystem::run,intakeSubsystem));
-    
+    //Intake right bumper
+    new JoystickButton(controller, Button.kRightBumper.value)
+      .whenPressed(new InstantCommand(intakeSubsystem::in,intakeSubsystem));
+    //Outtake left bumper
+	  new JoystickButton(controller, Button.kLeftBumper.value)
+      .whenPressed(new InstantCommand(intakeSubsystem::out,intakeSubsystem));
+    //Internal Transport right trigger
+	  new JoystickButton(controller, Axis.kRightTrigger.value)
+      .whenPressed(new InstantCommand(it::run,it));
+    //Lift thingy Y button
     new JoystickButton(controller, Button.kY.value)
       .toggleWhenPressed(new StartEndCommand(hangyThingySubsystem::forward, hangyThingySubsystem::deactivate, hangyThingySubsystem));
 
-    new JoystickButton(controller, Button.kRightBumper.value).whenPressed(new InstantCommand(it::run,it));
   }
 
 

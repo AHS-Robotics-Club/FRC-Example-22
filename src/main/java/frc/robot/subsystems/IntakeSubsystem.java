@@ -15,8 +15,11 @@ public class IntakeSubsystem extends SubsystemBase{
     public IntakeSubsystem() {
 
     }
-	public void run(){
+	public void in(){
 		motor.set(0.75);
+	}
+	public void out(){
+		motor.set(-0.75);
 	}
     /**
      * Turns solenoid for the intake.
