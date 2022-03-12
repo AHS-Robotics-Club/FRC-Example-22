@@ -24,7 +24,7 @@ public class DriveSubsystem extends SubsystemBase {
     private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotors, rightMotors);
 
     /**
-     * Inverts right motors, as per WPILib convention.
+     * Drive Subsystem constructor which inverts the right drivetrain motors
      */
     public DriveSubsystem() {
         rightMotors.setInverted(true);

@@ -28,6 +28,14 @@ public final class Constants {
         // public static final int kMotor1 = 11;
     }
 
+    public static final class SolenoidConstants {
+        public static final int intakeLeftPort = 1;
+        public static final int intakeRightPort = 2; 
+        
+        public static final int actuatorForwardPort = 3;
+        public static final int actuatorReversePort = 4;
+    }
+
     // Controller constants
     public static final class OIConstants {
         public static final int controller = 0;

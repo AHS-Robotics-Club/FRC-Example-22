@@ -6,12 +6,19 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.HangyThingySubsystem;
+import frc.robot.subsystems.IntakeSolenoidSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -25,6 +32,8 @@ public class RobotContainer {
   private final ExampleCommand m_autoCommand = new ExampleCommand(exampleSubsystem);
   
   private final DriveSubsystem driveSubsystem = new DriveSubsystem(); // Adding a subsystem
+  private final IntakeSolenoidSubsystem intakeSolenoidSubsystem = new IntakeSolenoidSubsystem();
+  private final HangyThingySubsystem hangyThingySubsystem = new HangyThingySubsystem();
 
   private XboxController controller = new XboxController(OIConstants.controller); // Adding robot controller
 
@@ -32,6 +41,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
 
     // Set the default command for drive subsystem so that the robot will drive based on controller inputs throughout the match
     driveSubsystem.setDefaultCommand(
@@ -44,7 +54,19 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+
+    // Drops intake on press of the A button
+    new JoystickButton(controller, Button.kA.value)
+      .whenPressed(new ParallelCommandGroup(
+        new InstantCommand(intakeSolenoidSubsystem::dropLeftIntake),
+        new InstantCommand(intakeSolenoidSubsystem::dropRightIntake)
+      ));
+    
+    new JoystickButton(controller, Button.kY.value)
+      .toggleWhenPressed(new StartEndCommand(hangyThingySubsystem::forward, hangyThingySubsystem::deactivate, hangyThingySubsystem));
+  }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
