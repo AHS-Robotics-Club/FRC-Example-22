@@ -56,7 +56,7 @@ public class RobotContainer {
 
     //Intake right bumper
     new JoystickButton(controller, Button.kRightBumper.value)
-      .whenPressed(new InstantCommand(intakeSubsystem::in,intakeSubsystem));
+      .whenPressed(new InstantCommand(intakeSubsystem::intake,intakeSubsystem));
     //Outtake left bumper
 	  new JoystickButton(controller, Button.kLeftBumper.value)
       .whenPressed(new InstantCommand(intakeSubsystem::out,intakeSubsystem));

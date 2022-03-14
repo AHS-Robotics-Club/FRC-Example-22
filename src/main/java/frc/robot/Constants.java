@@ -24,22 +24,26 @@ public final class Constants {
         public static final int kRightMotor1Port = 6;
         public static final int kRightMotor2Port = 8;
 
-        // Extra motors
-        // public static final int kMotor1 = 11;
     }
 
     public static final class SolenoidConstants {
-        public static final int intakePort = 1;
-        public static final int actuatorForwardPort = 3;
-        public static final int actuatorReversePort = 4;
+        // Intake Dropdown
+        public static final int kIntakePort = 1; 
+
+        // Robot Lift
+        public static final int kActuatorForwardPort = 3;
+        public static final int kActuatorReversePort = 4;
     }
-	public static final class IntakeConst{
-		public static final int IntakeMotor = 9;
+
+	public static final class IntakeConstants {
+		public static final int kMotor1Port = 9;
 	}
-	public static final class ITConst{
-		public static final int motor1 = 10;
-		public static final int motor2 = 11;
+
+	public static final class ITConstants {
+		public static final int kMotor1Port = 10;
+		public static final int kMotor2Port = 11;
 	}
+
     // Controller constants
     public static final class OIConstants {
         public static final int controller = 0;

@@ -6,12 +6,22 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SolenoidConstants;
 
+/**
+ * Robot Lift Subsystem
+ * 
+ * Subsystem that activates a solenoid in the forward drection to raise a hook,
+ * which attaches to a rung of the hangar and then activates a solenoid in the reverse direction
+ * to allow the robot to hang. 
+ */
+
 public class HangyThingySubsystem extends SubsystemBase {
+
      // Initialize Double Solenoid
-     private final DoubleSolenoid actuator = new DoubleSolenoid(PneumaticsModuleType.REVPH, SolenoidConstants.actuatorForwardPort, SolenoidConstants.actuatorReversePort);
+     private final DoubleSolenoid actuator = new DoubleSolenoid(PneumaticsModuleType.REVPH,
+        SolenoidConstants.kActuatorForwardPort, SolenoidConstants.kActuatorReversePort);
 
     /**
-     * Empty constructor to initialize the subsystem, not necessary
+     * Empty constructor to initialize the subsystem
      */
      public HangyThingySubsystem() {
 
@@ -32,7 +42,7 @@ public class HangyThingySubsystem extends SubsystemBase {
      }
 
      /**
-      * Open solenoid in reverse state, not required
+      * Open solenoid in reverse state
       */
      public void reverse() {
          actuator.set(Value.kReverse);
